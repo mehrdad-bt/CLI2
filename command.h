@@ -11,6 +11,7 @@ typedef enum{
 typedef struct Command_t{
 
     CommandState_t state;
+    char token3[8];
 }Command_t;
 
 void Command_init(Command_t*);
