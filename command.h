@@ -3,7 +3,8 @@
 typedef enum{
     C_IDLE,
     C_UART,
-    C_LED,
+    C_LED_ON,
+    C_LED_OFF,
     C_HELP
 }CommandState_t;
 
@@ -13,4 +14,4 @@ typedef struct Command_t{
 }Command_t;
 
 void Command_init(Command_t*);
-Command_t Command_GetState_Default(Command_t*, char*);
+CommandState_t Command_GetState(Command_t*, char*);

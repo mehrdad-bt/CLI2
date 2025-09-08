@@ -14,4 +14,7 @@ typedef struct Led_t{
 
 
 void Led_init(Led_t*);
+void Led_off(Led_t*);
+void Led_on(Led_t*);
+//void Led_toggle(Led_t*);
 
