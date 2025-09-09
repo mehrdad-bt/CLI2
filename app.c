@@ -4,26 +4,21 @@
 #include "command.h"
 #include "uart.h"
 
-
-void app(char *input){
-
-    static int initialized = 0;
-    static Led_t led;
-    static UART_t uart;
-
-
-    if(!initialized)
-    {
-        Led_init(&led);
-        Uart_init(&uart);
-        initialized = 1;
-    }
-
-    Command_t mode;
+void App_init(App_t *app)
+{
     
-    Command_init(&mode); 
+    Led_init(&app->led);
+    Uart_init(&app->uart);
+    Command_init(&app->command);
+}
+
+void App_Process(App_t *app, char *input){
+
+
     
-    CommandState_t command = Command_GetState(&mode, input);
+     
+    
+    CommandState_t command = Command_GetState(&app->command, input);
 
     switch(command)
     {
@@ -40,9 +35,9 @@ void app(char *input){
         {
             
             
-            if(led.state == LED_OFF)
+            if(app->led.state == LED_OFF)
             {
-                Led_on(&led);
+                Led_on(&app->led);
                 printf("Led is on\n");
             }
             else
@@ -55,9 +50,9 @@ void app(char *input){
 
         case C_LED_OFF:
         {
-            if(led.state == LED_ON)
+            if(app->led.state == LED_ON)
             {
-                Led_off(&led);
+                Led_off(&app->led);
                 printf("Led is off\n");
             }
             else
@@ -71,21 +66,21 @@ void app(char *input){
         case C_UART_SEND:
         {
             
-            Uart_Send(&uart, mode.token3);
+            Uart_Send(&app->uart, app->command.token3);
 
         }
         break;
 
-        case UART_STATUS:
+        case C_UART_STATUS:
         {
-            Uart_Status(&uart);
+            Uart_Status(&app->uart);
 
         }
         break;
 
-        case UART_TX:
+        case C_UART_TX:
         {
-            Uart_Tx(&uart);
+            Uart_Tx(&app->uart);
 
         }
         break;

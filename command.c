@@ -5,81 +5,62 @@
 
 
 
-
 void Command_init(Command_t *command)
 {
     command->state = C_IDLE;
+
 }
 
 CommandState_t Command_GetState(Command_t *command, char *input)
 {
 
 
-    char token1[20];
-    char token2[20];
+
+    CommandTable_t table[] =
+    {
+    {"led", "on",    C_LED_ON},
+    {"led", "off",   C_LED_OFF},
+    {"uart", "send", C_UART_SEND},
+    {"uart", "status",   C_UART_STATUS},
+    {"uart", "tx",   C_UART_TX},
+    {"help", "",         C_HELP}
+
+    };
+
+    char *token1;
+    char *token2;
+    char *token3;
     
 
-    input = strtok(input, " \n");
+    token1 = strtok(input, " \n");
+    token2 = strtok(NULL, " \n");
+    token3 = strtok(NULL, " \n");
     
-      while(input != NULL)
-            {
-            strcpy(token1, input);
-            input = strtok(NULL, " \n");
-            
-            if(input == NULL)
-            {
-                break;
-            }
+    if(token2 == NULL)
+    {
+        token2 = "";
+    }
 
-            strcpy(token2, input);
-            input = strtok(NULL, " \n");
+    if(token3 != NULL)
+    {
+    strcpy(command->token3, token3);
+    }
 
-            if(input == NULL)
-            {
-                break;
-            }
-
-            strcpy(command->token3, input);
-            input = strtok(NULL, " \n");                        
-            }
-            
+    else
+    {
+    command->token3[0] = '\0';
+    }
         
     /*conditions*/
-    if((strcmp(token1, "help") == 0))
+    for(int i = 0; i < 6; i++)
     {
-        command->state = C_HELP;
+        if(strcmp(token1, table[i].cmd1) == 0 && strcmp(token2, table[i].cmd2) == 0)
+        {
+            return table[i].state;
+        }
     }
 
-    if((strcmp(token1, "led") == 0) && (strcmp(token2, "on") == 0) && (strcmp(command->token3, "") == 0))
-    {
-        command->state = C_LED_ON;
-    }
-
-    if((strcmp(token1, "led") == 0) && (strcmp(token2, "off") == 0) && (strcmp(command->token3, "") == 0))
-    {
         
-        command->state = C_LED_OFF;
-    }
-
-    if((strcmp(token1, "uart") == 0) && (strcmp(token2, "send") == 0))
-    {
-        command->state = C_UART_SEND;
-    }
-
-    if((strcmp(token1, "uart") == 0) && (strcmp(token2, "status") == 0))
-    {
-         command->state = UART_STATUS;
-    }
-
-    if((strcmp(token1, "uart") == 0) && (strcmp(token2, "tx") == 0))
-    {
-         command->state = UART_TX;
-    }
-
-
-  
-    return (command->state);
-       
        
 
 }

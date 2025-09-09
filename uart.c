@@ -5,8 +5,8 @@
 
 void Uart_init(UART_t *uart)
 {
-    memset(uart->state.Buffer_Rx, 0, sizeof(SIZE));
-    memset(uart->state.Buffer_Tx, 0, sizeof(SIZE));
+    memset(uart->state.Buffer_Rx, 0, sizeof(uart->state.Buffer_Rx));
+    memset(uart->state.Buffer_Tx, 0, sizeof(uart->state.Buffer_Rx));
     uart->state.Head_Tx = 0;
     uart->state.Head_Rx = 0;
     uart->state.Tail_Tx = 0;
@@ -48,13 +48,14 @@ void Uart_Status(UART_t *uart){
 void Uart_Tx(UART_t *uart)
 {
     int index = uart->state.Tail_Tx;
+    int index_count = uart->state.Count_Tx;
     if(uart->state.Count_Tx == 0)
     {
         printf("Nothing in Buffer to send !\n");
         return;
     }
     printf("Sending : ");
-    for(int i = 0; i < SIZE; i++)
+    for(int i = 0; i < index_count; i++)
     {
         printf("%c", uart->state.Buffer_Tx[index]);
         uart->state.Tail_Tx = (uart->state.Tail_Tx + 1) % 8;

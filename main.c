@@ -7,13 +7,15 @@
 
 int main(){
     char input[40];
+    App_t app;
+    App_init(&app);
     while(1)
     {
         fgets(input, sizeof(input), stdin);
         if(strcmp(input, "exit\n") == 0)
             break;
         
-        app(input);
+        App_Process(&app, input);
 
     }
 
