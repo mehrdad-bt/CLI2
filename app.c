@@ -9,7 +9,7 @@ void app(char *input){
 
     static int initialized = 0;
     static Led_t led;
-    UART_t uart;
+    static UART_t uart;
 
 
     if(!initialized)
@@ -30,7 +30,8 @@ void app(char *input){
 
         case C_HELP:
         {
-             printf("help mode\n");
+           
+            printf("> led on\nLED ON\n> led off\nLED OFF\n> uart send hello\n5 bytes queued\n> uart status\nTX Count : 5\nRX Count : 0\n> uart tx\nSending : hello\n> uart status\nTX Count : 0\nRX Count : 0\n");
         }
         break;
 
@@ -67,10 +68,24 @@ void app(char *input){
         }
         break;
 
-        case C_UART:
+        case C_UART_SEND:
         {
             
             Uart_Send(&uart, mode.token3);
+
+        }
+        break;
+
+        case UART_STATUS:
+        {
+            Uart_Status(&uart);
+
+        }
+        break;
+
+        case UART_TX:
+        {
+            Uart_Tx(&uart);
 
         }
         break;

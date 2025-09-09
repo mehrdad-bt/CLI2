@@ -15,3 +15,5 @@ typedef struct UART_t{
 
 void Uart_init(UART_t*);
 void Uart_Send(UART_t*, char*);
+void Uart_Status(UART_t*);
+void Uart_Tx(UART_t*);

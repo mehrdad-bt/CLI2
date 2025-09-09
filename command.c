@@ -45,7 +45,7 @@ CommandState_t Command_GetState(Command_t *command, char *input)
             
         
     /*conditions*/
-    if((strcmp(token1, "help") == 0) && (strcmp(token2, "") == 0) && (strcmp(command->token3, "") == 0))
+    if((strcmp(token1, "help") == 0))
     {
         command->state = C_HELP;
     }
@@ -63,8 +63,19 @@ CommandState_t Command_GetState(Command_t *command, char *input)
 
     if((strcmp(token1, "uart") == 0) && (strcmp(token2, "send") == 0))
     {
-        command->state = C_UART;
+        command->state = C_UART_SEND;
     }
+
+    if((strcmp(token1, "uart") == 0) && (strcmp(token2, "status") == 0))
+    {
+         command->state = UART_STATUS;
+    }
+
+    if((strcmp(token1, "uart") == 0) && (strcmp(token2, "tx") == 0))
+    {
+         command->state = UART_TX;
+    }
+
 
   
     return (command->state);

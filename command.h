@@ -2,7 +2,9 @@
 
 typedef enum{
     C_IDLE,
-    C_UART,
+    C_UART_SEND,
+    UART_STATUS,
+    UART_TX,
     C_LED_ON,
     C_LED_OFF,
     C_HELP
