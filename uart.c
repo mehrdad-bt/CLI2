@@ -18,16 +18,16 @@ void Uart_init(UART_t *uart)
 
 void Uart_Send(UART_t *uart, char *token3)
 {
-    printf("inside uart\n");
-    for(int i = 0; i < 5 ; i++)
+    int len = strlen(token3);
+    for(int i = 0; i < len ; i++)
     {
 
         uart->state.Buffer_Tx[uart->state.Head_Tx] = token3[i];
         uart->state.Head_Tx = (uart->state.Head_Tx + 1) % SIZE ;
-
-        printf("test");
-
+        uart->state.Count_Tx++;
+        
     }
+    printf("%d bytes Queued\n", uart->state.Count_Tx);
 }
 
 

@@ -11,9 +11,11 @@ void app(char *input){
     static Led_t led;
     UART_t uart;
 
+
     if(!initialized)
     {
         Led_init(&led);
+        Uart_init(&uart);
         initialized = 1;
     }
 
